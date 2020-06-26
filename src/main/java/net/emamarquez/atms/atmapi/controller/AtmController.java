@@ -2,8 +2,10 @@ package net.emamarquez.atms.atmapi.controller;
 
 import net.emamarquez.atms.atmapi.entity.Atm;
 import net.emamarquez.atms.atmapi.service.AtmService;
+import net.emamarquez.atms.atmapi.service.IAtmService;
 import net.emamarquez.atms.atmapi.util.ResponseTransfer;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,8 @@ import java.util.List;
 @RequestMapping("/api")
 public class AtmController {
 
-    AtmService service = new AtmService();
+    @Autowired
+    private IAtmService service;
 
     //@ResponseStatus(value = HttpStatus.BAD_REQUEST,code = HttpStatus.BAD_REQUEST)
     @GetMapping("")
@@ -28,13 +31,12 @@ public class AtmController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public ResponseTransfer getAtms(@RequestParam(name = "city", required = false, defaultValue = "") String city,
-                             @RequestParam(name = "zipcode", required = false, defaultValue = "") String zipcode,
-                             @RequestParam(name = "street", required = false, defaultValue = "") String street,
-                             @RequestParam(name = "hnumber", required = false, defaultValue = "") String houseNumber,
-                             @RequestParam(name = "type", required = false, defaultValue = "") String type
-    )
+                                    @RequestParam(name = "zipcode", required = false, defaultValue = "") String zipcode,
+                                    @RequestParam(name = "street", required = false, defaultValue = "") String street,
+                                    @RequestParam(name = "hnumber", required = false, defaultValue = "") String houseNumber,
+                                    @RequestParam(name = "type", required = false, defaultValue = "") String type
+    ) {
 
-    {
         List<Atm> atms = service.getAtms();
         if (city != "") {
             Iterator<Atm> it = atms.iterator();

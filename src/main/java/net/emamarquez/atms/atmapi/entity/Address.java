@@ -1,5 +1,6 @@
 package net.emamarquez.atms.atmapi.entity;
 
+
 public class Address {
     private String street;
     private String houseNumber;

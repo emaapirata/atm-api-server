@@ -6,15 +6,29 @@ import net.emamarquez.atms.atmapi.entity.GeoLocation;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+
 import java.util.List;
 
-public class AtmService {
+@Service
+public class AtmService implements IAtmService {
+
+
+
+    private JSONParser atm_parser = new JSONParser();
+
+
+    public AtmService() {
+    }
+
+
     public List<Atm> getAtms() {
+
+
         List<Atm> salida = new ArrayList<>();
-        JSONParser atm_parser = new JSONParser();
         try {
             JSONArray arrAtm = (JSONArray) atm_parser.parse(new FileReader("src/main/resources/static/ATMs"));
             for (int i = 0; i < arrAtm.size(); i++) {
@@ -33,12 +47,8 @@ public class AtmService {
                                 atmAddress.get("city").toString(),
                                 geoLocation);
 
-                        Atm atm = new Atm(address,
-                                Integer.parseInt(objAtm.get("distance").toString()),
-                                objAtm.get("type").toString());
-
+                        Atm atm = new Atm(address,Integer.parseInt(objAtm.get("distance").toString()),objAtm.get("type").toString());
                         salida.add(atm);
-
                     }
 
                 }
@@ -49,7 +59,6 @@ public class AtmService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Cantidad de atms encontrada: " + salida.size());
         return salida;
     }
 }

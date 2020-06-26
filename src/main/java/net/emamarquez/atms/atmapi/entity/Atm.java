@@ -1,5 +1,9 @@
 package net.emamarquez.atms.atmapi.entity;
 
+
+import java.beans.JavaBean;
+
+@JavaBean
 public class Atm {
     private Address address;
     private int distance;
@@ -8,6 +12,9 @@ public class Atm {
         this.address = address;
         this.distance = distance;
         this.type = type;
+    }
+
+    public Atm() {
     }
 
     private String type;
